@@ -1,5 +1,4 @@
 # FastAPI Crash Course
-
 ## HTTP Methods
 FastAPI supports several HTTP methods that can be used to define different types of endpoints in an application. Here's a short description of each HTTP method in FastAPI:
 
@@ -65,9 +64,16 @@ from fastapi import FastAPI
 app = FastAPI()
 
 @app.get("/items/{item_id}")
-async def get_item(item_id: int, q: str = None):
-    return {"item_id": items[item_id], "q": q}
+def get_item(item_id: int, q: str = None):
+    item = items.get(item_id)
+    if not item:
+        return {"error": "Item not found"}
+    if q:
+        item.update({"q": q})
+    return item
 ```
 In this example, the endpoint is defined using the @app.get decorator, which specifies that it responds to HTTP GET requests. The endpoint path includes a path parameter, item_id, which is defined by enclosing it in curly braces {}. The endpoint also includes a query parameter, q, which is optional and has a default value of None.
 
-When the endpoint is called, the value of item_id is taken from the path parameter in the URL, and the value of q is taken from the query string, if it is present. The endpoint returns a JSON response containing both parameter values.
+When the endpoint is called, the value of item_id is taken from the path parameter in the URL, and the value of q is taken from the query string, if it is present. The endpoint returns a JSON response containing both parameter values. <hr>
+
+## Request Body and Post Method
