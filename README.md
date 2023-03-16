@@ -1,5 +1,25 @@
 # FastAPI Crash Course
 
+## HTTP Methods
+FastAPI supports several HTTP methods that can be used to define different types of endpoints in an application. Here's a short description of each HTTP method in FastAPI:
+
+- **GET**: Used to retrieve a resource or a list of resources. This method should be safe and idempotent, meaning it should not modify any data on the server.
+
+- **POST**: Used to create a new resource. This method is not idempotent, meaning multiple requests can result in multiple resource creations.
+
+- **PUT**: Used to update an existing resource. This method should be idempotent, meaning multiple requests should result in the same resource state.
+
+- **PATCH**: Similar to PUT, but used to partially update an existing resource.
+
+- **DELETE**: Used to delete an existing resource. This method should be idempotent, meaning multiple requests should result in the same resource state.
+
+- **OPTIONS**: Used to retrieve information about the communication options available for a resource.
+
+- **HEAD**: Similar to GET, but only retrieves the HTTP headers for a resource, without the actual content.
+
+In FastAPI, each of these **HTTP methods can be mapped to a Python function that defines the behavior of the corresponding endpoint**.
+ 
+ The **@app.get**, **@app.post**, **@app.put**, **@app.patch**, **@app.delete**, **@app.options**, and **@app.head decorators** are used to create endpoints that respond to the corresponding HTTP methods. <hr>
 
 In FastAPI, path parameters and query parameters are two ways to accept data from a client.
 ## Path Parameter
