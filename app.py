@@ -48,3 +48,13 @@ def get_item_by_name(*, name: Optional[str] = None, price: float):
         if items[item_id]["name"] == name:
             return items[item_id]
     return {"Data": "Not Found!"}
+
+
+@app.get("/items/{item_id}")
+def get_item(item_id: int, q: str = None):
+    item = items.get(item_id)
+    if not item:
+        return {"error": "Item not found"}
+    if q:
+        item.update({"q": q})
+    return item

@@ -54,3 +54,20 @@ async def read_items(skip: int = 0, limit: int = 10):
 
 ```
 In this example, the read_items function accepts two query parameters skip and limit, both of type int with default values of 0 and 10 respectively. When the client requests a URL like /items?skip=20&limit=5, the function will receive skip=20 and limit=5 as the values for the corresponding parameters. If no values are provided in the URL, the function will use the default values.
+
+## Combining Path and Query Parameters
+We can combine path and query parameters in FastAPI.<br>
+Here's an example of how to define an endpoint that uses both path and query parameters:
+
+```
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/items/{item_id}")
+async def get_item(item_id: int, q: str = None):
+    return {"item_id": items[item_id], "q": q}
+```
+In this example, the endpoint is defined using the @app.get decorator, which specifies that it responds to HTTP GET requests. The endpoint path includes a path parameter, item_id, which is defined by enclosing it in curly braces {}. The endpoint also includes a query parameter, q, which is optional and has a default value of None.
+
+When the endpoint is called, the value of item_id is taken from the path parameter in the URL, and the value of q is taken from the query string, if it is present. The endpoint returns a JSON response containing both parameter values.
