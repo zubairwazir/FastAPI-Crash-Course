@@ -144,7 +144,7 @@ async def update_item(item_id: int, item: UpdateItem):
         items[item_id]["price"] = item.price
     if item.description != None:
         items[item_id]["description"] = item.description
-        
+
     return {"message": "Item updated successfully"}
 ```
 In this example, we have defined a PUT endpoint that updates an existing item by ID. We have used the Item class that we defined earlier, and we have assumed that we already have a dictionary called items that contains the existing items.
@@ -153,4 +153,22 @@ The endpoint takes two parameters - item_id and item. The item_id parameter is a
 
 We first check if the specified item_id exists in the items dictionary. If it doesn't, we return an error message. If it does, we update the corresponding item with the data from the item parameter. We use the dict() method of the Item object to convert it to a dictionary before updating the items dictionary.
 
-Finally, we return a message indicating that the item was updated successfully.
+Finally, we return a message indicating that the item was updated successfully.<hr>
+
+## DELETE Method
+
+In FastAPI, you can define a DELETE method to handle HTTP DELETE requests. The DELETE method is typically used to delete a specific resource identified by a unique identifier.<br>
+
+Here's an example of how you can implement a DELETE method to delete an item from the items dictionary based on its ID:
+```
+@app.delete("/items/{item_id}")
+async def delete_item(item_id: int):
+    if item_id not in items:
+        return {"error": "Item not found"}
+    del items[item_id]
+    return {"message": "Item deleted successfully"}
+
+```
+In this example, the delete_item function takes a item_id parameter which is passed in through the path parameter of the URL. If the item with the specified ID does not exist in the items dictionary, the function returns an error message. Otherwise, it deletes the item from the dictionary using the del keyword, and returns a success message.
+
+Note that it's important to handle errors gracefully in your application to provide informative error messages to clients. In this example, if the item is not found, we return an error message with an appropriate HTTP status code (e.g. 404 Not Found).

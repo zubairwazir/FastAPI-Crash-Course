@@ -91,3 +91,12 @@ async def update_item(item_id: int, item: UpdateItem):
         items[item_id]["description"] = item.description
 
     return {"message": "Item updated successfully"}
+
+
+@app.delete("/items/{item_id}")
+async def delete_item(item_id: int):
+    if item_id not in items:
+        return {"error": "Item not found"}
+    del items[item_id]
+    return {"message": "Item deleted successfully"}
+ 
