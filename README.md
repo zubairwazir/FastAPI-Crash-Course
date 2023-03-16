@@ -77,3 +77,34 @@ In this example, the endpoint is defined using the @app.get decorator, which spe
 When the endpoint is called, the value of item_id is taken from the path parameter in the URL, and the value of q is taken from the query string, if it is present. The endpoint returns a JSON response containing both parameter values. <hr>
 
 ## Request Body and Post Method
+In FastAPI, you can define a request body using the BaseModel class from the pydantic module. A request body is the data that the client sends to the server as part of a POST request. <br>
+
+Here's an example of how to define a request body for adding a new item to the items dictionary using the POST method:
+
+```
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class Item(BaseModel):
+    name: str
+    price: float
+    description: Optional[str] = None
+
+items = {}
+
+@app.post("/create_item")
+def create_item(item_id: int, item: Item):
+    if item_id in items:
+        return {"error": "Item already exists!"}
+    items[item_id] = item
+    return items[item_id]
+```
+In this example, we first define a new Item class that inherits from the BaseModel class in FastAPI's pydantic module. The Item class has three fields: name, price, and description.
+
+Next, we define the create_item endpoint with the @app.post decorator. In the create_item function, we define a parameter called item with the type Item, which is the class we defined earlier. This means that the request body should have JSON data with the same keys as the attributes of the Item class. This endpoint takes an Item object as the request body, which is automatically parsed and validated by FastAPI based on the field types and validation rules specified in the Item class.
+
+Inside the endpoint, we generate a new item_id based on the current length of the items dictionary, add the new item to the dictionary with the item_id as the key, and return a response containing the new item_id.<hr>
+
+## PUT Method

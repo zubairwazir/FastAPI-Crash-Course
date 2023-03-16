@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Path
 from typing import Optional
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -30,6 +31,10 @@ items = {
     "description": "A small round fruit with a smooth skin and juicy flesh ranging in color from green to dark purple."
   }
 }
+class Item(BaseModel):
+    name: str
+    price: float
+    description: Optional[str] = None
 
 
 @app.get("/")
@@ -37,8 +42,8 @@ def index():
     return {"welcome": "first Page"}
 
 
-@app.get("/get_student/{item_id}")
-def index(item_id: int = Path(None, description="The id of item", gt=0, lt=4)):
+@app.get("/get_item_by_id/{item_id}")
+def get_item_by_id(item_id: int = Path(None, description="The id of item", gt=0, lt=4)):
     return items[item_id]
 
 
@@ -50,7 +55,7 @@ def get_item_by_name(*, name: Optional[str] = None, price: float):
     return {"Data": "Not Found!"}
 
 
-@app.get("/items/{item_id}")
+@app.get("/get_item/{item_id}")
 def get_item(item_id: int, q: str = None):
     item = items.get(item_id)
     if not item:
@@ -58,3 +63,11 @@ def get_item(item_id: int, q: str = None):
     if q:
         item.update({"q": q})
     return item
+
+
+@app.post("/create_item")
+def create_item(item_id: int, item: Item):
+    if item_id in items:
+        return {"error": "Item already exists!"}
+    items[item_id] = item
+    return items[item_id]
