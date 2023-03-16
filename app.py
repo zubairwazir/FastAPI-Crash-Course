@@ -34,6 +34,11 @@ items = {
 class Item(BaseModel):
     name: str
     price: float
+    description: str
+
+class UpdateItem(BaseModel):
+    name: Optional[str] = None
+    price: Optional[float] = None
     description: Optional[str] = None
 
 
@@ -66,8 +71,23 @@ def get_item(item_id: int, q: str = None):
 
 
 @app.post("/create_item")
-def create_item(item_id: int, item: Item):
+async def create_item(item_id: int, item: Item):
     if item_id in items:
         return {"error": "Item already exists!"}
     items[item_id] = item
     return items[item_id]
+
+
+@app.put("/items/{item_id}")
+async def update_item(item_id: int, item: UpdateItem):
+    if item_id not in items:
+        return {"error": "Item not found"}
+    
+    if item.name != None:
+        items[item_id]["name"] = item.name
+    if item.price != None:
+        items[item_id]["price"] = item.price
+    if item.description != None:
+        items[item_id]["description"] = item.description
+
+    return {"message": "Item updated successfully"}

@@ -108,3 +108,49 @@ Next, we define the create_item endpoint with the @app.post decorator. In the cr
 Inside the endpoint, we generate a new item_id based on the current length of the items dictionary, add the new item to the dictionary with the item_id as the key, and return a response containing the new item_id.<hr>
 
 ## PUT Method
+Here's an example of using the PUT method in FastAPI:
+```
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class UpdateItem(BaseModel):
+    name: Optional[str] = None
+    price: Optional[float] = None
+    description: Optional[str] = None
+
+items = {
+  1: {
+    "name": "apple",
+    "price": 0.5,
+    "description": "A sweet fruit with a red or green skin and a core containing seeds."
+  },
+  2: {
+    "name": "banana",
+    "price": 0.25,
+    "description": "A long curved fruit with a yellow skin and soft sweet flesh."
+  }
+}
+
+@app.put("/items/{item_id}")
+async def update_item(item_id: int, item: UpdateItem):
+    if item_id not in items:
+        return {"error": "Item not found"}
+    
+    if item.name != None:
+        items[item_id]["name"] = item.name
+    if item.price != None:
+        items[item_id]["price"] = item.price
+    if item.description != None:
+        items[item_id]["description"] = item.description
+        
+    return {"message": "Item updated successfully"}
+```
+In this example, we have defined a PUT endpoint that updates an existing item by ID. We have used the Item class that we defined earlier, and we have assumed that we already have a dictionary called items that contains the existing items.
+
+The endpoint takes two parameters - item_id and item. The item_id parameter is a path parameter that specifies the ID of the item that needs to be updated. The item parameter is a request body parameter that contains the updated information for the item.
+
+We first check if the specified item_id exists in the items dictionary. If it doesn't, we return an error message. If it does, we update the corresponding item with the data from the item parameter. We use the dict() method of the Item object to convert it to a dictionary before updating the items dictionary.
+
+Finally, we return a message indicating that the item was updated successfully.
