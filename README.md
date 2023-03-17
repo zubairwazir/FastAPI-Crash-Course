@@ -170,11 +170,6 @@ items = {
     "name": "apple",
     "price": 0.5,
     "description": "A sweet fruit with a red or green skin and a core containing seeds."
-  },
-  2: {
-    "name": "banana",
-    "price": 0.25,
-    "description": "A long curved fruit with a yellow skin and soft sweet flesh."
   }
 }
 
@@ -206,6 +201,18 @@ In FastAPI, you can define a DELETE method to handle HTTP DELETE requests. The D
 
 Here's an example of how you can implement a DELETE method to delete an item from the items dictionary based on its ID:
 ```
+from fastapi import FastAPI
+
+app = FastAPI()
+
+items = {
+  1: {
+    "name": "apple",
+    "price": 0.5,
+    "description": "A sweet fruit with a red or green skin and a core containing seeds."
+  }
+}
+
 @app.delete("/items/{item_id}")
 async def delete_item(item_id: int):
     if item_id not in items:
