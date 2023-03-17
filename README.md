@@ -54,6 +54,24 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+items = {
+  1: {
+    "name": "apple",
+    "price": 0.5,
+    "description": "A sweet fruit with a red or green skin and a core containing seeds."
+  },
+  2: {
+    "name": "banana",
+    "price": 0.25,
+    "description": "A long curved fruit with a yellow skin and soft sweet flesh."
+  },
+  3: {
+    "name": "orange",
+    "price": 0.35,
+    "description": "A round citrus fruit with a tough bright reddish-yellow rind and juicy acid pulp."
+  }
+}
+
 @app.get("/items/{item_id}")
 async def read_item(item_id: int):
     return {"item_id": item_id}
@@ -69,6 +87,24 @@ Here's an example of a FastAPI endpoint that accepts query parameters:
 from fastapi import FastAPI
 
 app = FastAPI()
+
+items = {
+  1: {
+    "name": "apple",
+    "price": 0.5,
+    "description": "A sweet fruit with a red or green skin and a core containing seeds."
+  },
+  2: {
+    "name": "banana",
+    "price": 0.25,
+    "description": "A long curved fruit with a yellow skin and soft sweet flesh."
+  },
+  3: {
+    "name": "orange",
+    "price": 0.35,
+    "description": "A round citrus fruit with a tough bright reddish-yellow rind and juicy acid pulp."
+  }
+}
 
 @app.get("/items/")
 async def read_items(skip: int = 0, limit: int = 10):
@@ -87,6 +123,24 @@ Here's an example of how to define an endpoint that uses both path and query par
 from fastapi import FastAPI
 
 app = FastAPI()
+
+items = {
+  1: {
+    "name": "apple",
+    "price": 0.5,
+    "description": "A sweet fruit with a red or green skin and a core containing seeds."
+  },
+  2: {
+    "name": "banana",
+    "price": 0.25,
+    "description": "A long curved fruit with a yellow skin and soft sweet flesh."
+  },
+  3: {
+    "name": "orange",
+    "price": 0.35,
+    "description": "A round citrus fruit with a tough bright reddish-yellow rind and juicy acid pulp."
+  }
+}
 
 @app.get("/items/{item_id}")
 def get_item(item_id: int, q: str = None):
